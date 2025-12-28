@@ -1,0 +1,386 @@
+:root {
+  /* Cyberpunk Palette */
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff0a;
+  --bg-black: #050505;
+  --glass-bg: rgba(20, 20, 20, 0.7);
+  --grid-color: rgba(0, 243, 255, 0.1);
+
+  --font-main: 'Orbitron', sans-serif;
+  --font-sub: 'DotGothic16', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-black);
+  color: var(--neon-cyan);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  /* エフェクトのはみ出し防止 */
+  position: relative;
+}
+
+/* --- Background Effects --- */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1));
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 200vh;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+  animation: gridMove 20s linear infinite;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
+  }
+
+  100% {
+    transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px);
+  }
+}
+
+/* --- Container --- */
+.container {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  border: 1px solid var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+  backdrop-filter: blur(5px);
+  background: var(--glass-bg);
+  /* 角を切り落とす */
+  clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
+}
+
+/* --- Typography --- */
+header h1.neon-text {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 5px var(--neon-cyan),
+    0 0 10px var(--neon-cyan),
+    0 0 20px var(--neon-cyan);
+  position: relative;
+}
+
+header h1.neon-text::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--neon-pink);
+  z-index: -1;
+  filter: blur(2px);
+  opacity: 0.8;
+  transform: translate(2px, 2px);
+}
+
+.status-text {
+  font-family: var(--font-sub);
+  font-size: 0.9rem;
+  color: var(--neon-purple);
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
+}
+
+/* --- Result Area --- */
+.result-box {
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  border: 1px dashed var(--neon-cyan);
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.result-text {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px currentColor;
+  animation: txtEntry 0.2s steps(4) both;
+}
+
+@keyframes txtEntry {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.placeholder {
+  font-family: var(--font-sub);
+  color: var(--neon-green);
+  font-size: 1rem;
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- Button --- */
+.cyber-btn {
+  background: transparent;
+  color: var(--neon-cyan);
+  border: 2px solid var(--neon-cyan);
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.cyber-btn:hover {
+  background: var(--neon-cyan);
+  color: #000;
+  box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+.cyber-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- Special Effects Logic Classes --- */
+
+/* 大吉 (DAI-KICHI) mode */
+.mode-god {
+  border-color: var(--neon-pink) !important;
+  box-shadow: 0 0 50px var(--neon-pink), inset 0 0 30px var(--neon-pink) !important;
+}
+
+.mode-god .result-text {
+  color: #FFD700;
+  /* Gold */
+  text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 40px red !important;
+}
+
+.mode-glitch .shrine-gate {
+  box-shadow: 0 0 30px red, inset 0 0 20px red;
+  border-color: red;
+}
+
+/* Legal Footer */
+/* Legal Footer */
+.legal-footer {
+  position: fixed;
+  bottom: 20px;
+  /* Moved up slightly */
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  /* Slightly larger */
+  color: #555;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.legal-footer p {
+  margin: 4px 0;
+}
+
+.legal-footer a {
+  color: #777;
+  text-decoration: none;
+  pointer-events: auto;
+  transition: color 0.3s;
+  border-bottom: 1px dotted #777;
+  /* Subtle link underline */
+}
+
+.legal-footer a:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+  border-color: var(--neon-cyan);
+}
+
+/* Markdown / Legal Page Styles (for when LEGAL.md is viewed) */
+/* Note: Since we are opening a raw .md file, these styles won't apply directly 
+   UNLESS we wrap the legal content in a simple HTML wrapper. 
+   For now, we will create a simple HTML wrapper for the legal page. */
+
+/* 大凶 (MEGA-KYO) mode */
+.mode-glitch {
+  border-color: red !important;
+  animation: shake 0.5s infinite;
+}
+
+.mode-glitch .result-text {
+  color: red;
+  text-shadow: 2px 2px 0px blue, -2px -2px 0px lime;
+  animation: glitchText 0.1s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+@keyframes glitchText {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Overlay Effects */
+.effect-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.flash-god {
+  animation: flashWhite 1s ease-out;
+}
+
+@keyframes flashWhite {
+  0% {
+    background: white;
+    opacity: 1;
+  }
+
+  100% {
+    background: transparent;
+    opacity: 0;
+  }
+}
+
+.flash-danger {
+  background: rgba(255, 0, 0, 0.2);
+  animation: pulseRed 0.2s infinite;
+}
+
+@keyframes pulseRed {
+  0% {
+    opacity: 0.1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 0.1;
+  }
+}

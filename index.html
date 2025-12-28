@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER OMIKUJI 2077</title>
+    <meta name="description" content="未来のおみくじにアクセスせよ。Cyberpunk Omikuji App.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Cyberpunk fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- 背景エフェクト -->
+    <div class="scanline"></div>
+    <div class="cyber-grid"></div>
+    <div id="effect-overlay" class="effect-layer"></div>
+
+    <div class="container glass-panel">
+        <header>
+            <h1 class="neon-text" data-text="CYBER OMIKUJI">CYBER OMIKUJI</h1>
+            <p class="status-text">SYSTEM ONLINE... WAITING FOR INPUT</p>
+        </header>
+
+        <main>
+            <div id="result-area" class="result-box">
+                <span class="placeholder blink">>> PRESS BUTTON TO HACK DESTINY <<< /span>
+            </div>
+
+            <div class="action-area">
+                <button id="draw-btn" class="cyber-btn">
+                    <span class="btn-content">INITIALIZE_DRAW()</span>
+                    <span class="btn-glitch"></span>
+                </button>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Legal Footer -->
+    <footer class="legal-footer">
+        <p>※ This is a joke app. Results are randomized.</p>
+        <p><a href="LEGAL.html" target="_blank">Terms & Privacy</a> | © 2077 Cyber Omikuji Project</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
